@@ -1,17 +1,16 @@
 from DAO.database_manager import DatabaseConnectionManager
 from models.teacher import Teacher
+from src.table_name import TableName
 
 
 class TeacherManager(DatabaseConnectionManager):
 
-
-
-    def query_all(self, table_name) -> list:
+    def query_all(self, table_name: TableName) -> list:
         try:
             self.open_connection()
 
-            query = (f"SELECT t.id_teacher,t.start_date, p.first_name, p.last_name, p.age, p.id_address "
-                     f"FROM teacher t "
+            query = (f"SELECT t.id_teacher,t.start_date, p.first_name, p.last_name, p.age, p.id_address, t.id_person "
+                     f"FROM {table_name} t "
                      f"INNER JOIN "
                      f"person p ON t.id_person = p.id_person;")
             self.cursor.execute(query)
@@ -34,8 +33,13 @@ class TeacherManager(DatabaseConnectionManager):
         """
         try:
             self.open_connection()
-            query = (f"INSERT INTO courses (name, start_date, end_date) VALUES ('{new_teacher.name}',"
-                     f" '{new_teacher.start_date}', '{new_teacher.end_date}');")
+            query = (f"START TRANSACTION;"
+                     f"INSERT INTO person (first_name, last_name, age, id_address)"
+                     f"VALUES ('John', 'Doe', 30, 1);"
+                     f"INSERT INTO teacher (start_date, id_person)"
+                     f"VALUES ('2024-08-27', LAST_INSERT_ID());"
+                     f"COMMIT;")
+
             self.cursor.execute(query)
             self.conn.commit()
             self.close_connection()
@@ -78,4 +82,5 @@ class TeacherManager(DatabaseConnectionManager):
         self.cursor.execute(query)
         self.close_connection()
 
-    def delete(self): ...
+    def delete(self):
+        ...
