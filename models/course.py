@@ -29,7 +29,7 @@ class Course:
     - teacher : enseignant de ce cours
     - students_taking_it : élèves qui suivent ce cours
     """
-    _course_list = []
+    course_list = []
 
     id: int = field(default=None, init=False)
     name: str
@@ -39,7 +39,7 @@ class Course:
     students_taking_it: list[Student] = field(default_factory=list, init=False)
 
     @classmethod
-    def create_course(cls, name, start_date, end_date):
+    def create_course(cls, name: str, start_date, end_date):
         """
         Crée un nouvel objet Course et l'ajoute à la liste des cours.
         :param name:
@@ -48,7 +48,7 @@ class Course:
         :return:
         """
         new_course = cls(name=name, start_date=start_date, end_date=end_date)
-        Course._course_list.append(new_course)
+        Course.course_list.append(new_course)
         return new_course
 
     def set_teacher(self, teacher: Teacher) -> None:
@@ -75,6 +75,4 @@ class Course:
             if self.teacher is not None else "pas d'enseignant affecté"
         return course_str
 
-    @property
-    def course_list(self):
-        return self._course_list
+
