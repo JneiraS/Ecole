@@ -17,7 +17,7 @@ class Teacher(Person):
     - hiring_date : date d'arrivée dans l'école
     - courses_teached : cours qu'il ou elle enseigne
     """
-    _teacher_list = []
+    teacher_list = []
 
     id: int = field(default=None, init=False)
     hiring_date: date
@@ -26,7 +26,7 @@ class Teacher(Person):
     @classmethod
     def create_teacher(cls, first_name, last_name, age,hiring_date):
         new_teacher = cls(first_name=first_name, last_name=last_name, age=age, hiring_date=hiring_date)
-        Teacher._teacher_list.append(new_teacher)
+        Teacher.teacher_list.append(new_teacher)
         return new_teacher
 
     def add_course(self, course: Course) -> None:
