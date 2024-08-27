@@ -6,3 +6,4 @@ class TableName(Enum):
     COURSE = 'course'
     TEACHER = 'teacher'
     STUDENT = 'student'
+    ADDRESS = 'address'
