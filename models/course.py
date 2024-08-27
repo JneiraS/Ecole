@@ -8,9 +8,9 @@ Classe Course
 # (teacher: Teacher plutôt que teacher: 'Teacher')
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING
 from dataclasses import dataclass, field
 from datetime import date
+from typing import Optional, TYPE_CHECKING
 
 # pour éviter une circularité des imports à l'exécution,
 # les classes Student et Teacher important la classe Course
@@ -22,17 +22,34 @@ if TYPE_CHECKING:
 @dataclass
 class Course:
     """Cours enseigné à l'école :
-    - name               : nom du cours
-    - start_date         : date de début
-    - end_date           : date de fin
-    - teacher            : enseignant de ce cours
+    - id : identifiant du cours
+    - name : nom du cours
+    - start_date : date de début
+    - end_date : date de fin
+    - teacher : enseignant de ce cours
     - students_taking_it : élèves qui suivent ce cours
     """
+    _course_list = []
+
+    id: int = field(default=None, init=False)
     name: str
     start_date: date
     end_date: date
     teacher: Optional[Teacher] = field(default=None, init=False)
     students_taking_it: list[Student] = field(default_factory=list, init=False)
+
+    @classmethod
+    def create_course(cls, name, start_date, end_date):
+        """
+        Crée un nouvel objet Course et l'ajoute à la liste des cours.
+        :param name:
+        :param start_date:
+        :param end_date:
+        :return:
+        """
+        new_course = cls(name=name, start_date=start_date, end_date=end_date)
+        Course._course_list.append(new_course)
+        return new_course
 
     def set_teacher(self, teacher: Teacher) -> None:
         """Indique quel est l'enseignant de ce cours."""
@@ -57,3 +74,7 @@ class Course:
         course_str += f"enseigné par {self.teacher}" \
             if self.teacher is not None else "pas d'enseignant affecté"
         return course_str
+
+    @property
+    def course_list(self):
+        return self._course_list
