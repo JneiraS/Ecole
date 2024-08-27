@@ -11,11 +11,13 @@ class CourseManager(DatabaseConnectionManager):
         """
         try:
             self.open_connection()
-            query = (f"INSERT INTO courses (name, start_date, end_date) VALUES ('{new_course.name}',"
+            query = (f"INSERT INTO course (name, start_date, end_date) VALUES ('{new_course.name}',"
                      f" '{new_course.start_date}', '{new_course.end_date}');")
             self.cursor.execute(query)
+            new_teacher_id = self.cursor.lastrowid
             self.conn.commit()
             self.close_connection()
+            return new_teacher_id
         except Exception as e:
             print(f"An error occurred: {e}")
             self.close_connection()
@@ -49,6 +51,7 @@ class CourseManager(DatabaseConnectionManager):
                  f"{course_to_update.start_date}', end_date = '{course_to_update.end_date}', id_teacher = "
                  f"{course_to_update.teacher};")
         self.cursor.execute(query)
+        self.conn.commit()
         self.close_connection()
 
     def delete(self): ...
