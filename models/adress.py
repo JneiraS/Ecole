@@ -10,7 +10,9 @@ from typing import Optional
 
 @dataclass
 class Adress:
-    """Adresse d'une personne (enseignant ou élève)."""
+    """
+    Adresse d'une personne (enseignant ou élément).
+    """
 
     aderess_list = []
 
@@ -24,3 +26,5 @@ class Adress:
         new_adress = cls(street=street, city=city, postal_code=postal_code)
         Adress.aderess_list.append(new_adress)
         return new_adress
+
+
