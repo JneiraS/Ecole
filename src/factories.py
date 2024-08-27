@@ -26,6 +26,5 @@ def create_courses_from_query_results():
     list(map(CourseCreator().factory_method, results))
 
 
-create_courses_from_query_results()
 
-print(list(Course._course_list))
+
