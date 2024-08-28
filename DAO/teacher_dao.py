@@ -84,12 +84,11 @@ class TeacherManager(DatabaseConnectionManager):
     def update(self, teacher_to_update: Teacher):
         """Mett à jour la base de données avec les nouvelles informations du professeur."""
         self.open_connection()
-
         query = f"SELECT id_person FROM teacher WHERE id_teacher = '{teacher_to_update.id}';"
         self.cursor.execute(query)
+
         result = self.cursor.fetchone()
         id_person = result['id_person']
-        print(teacher_to_update.age)
 
         query = (f"UPDATE person SET "
                  f"first_name = '{teacher_to_update.first_name}', "
@@ -102,4 +101,8 @@ class TeacherManager(DatabaseConnectionManager):
         self.close_connection()
 
     def delete(self):
-        ...
+        """
+        Supprime le professeur de la base de données.
+        :return:
+        """
+        pass
