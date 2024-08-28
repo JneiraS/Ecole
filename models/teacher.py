@@ -6,9 +6,9 @@ Classe Teacher
 
 from dataclasses import dataclass, field
 from datetime import date
+from typing import TYPE_CHECKING
 
-from .course import Course
-from .person import Person
+from models.person import Person
 
 
 @dataclass
@@ -22,7 +22,7 @@ class Teacher(Person):
 
     id: int = field(default=None, init=False)
     hiring_date: date
-    courses_teached: list[Course] = field(default_factory=list, init=False)
+    courses_teached: list = field(default_factory=list, init=False)
 
     @classmethod
     def create_teacher(cls, first_name, last_name, age, hiring_date):
@@ -32,7 +32,7 @@ class Teacher(Person):
         Teacher.teacher_list.append(new_teacher)
         return new_teacher
 
-    def add_course(self, course: Course) -> None:
+    def add_course(self, course) -> None:
         """Ajout du cours course à la liste des cours qu'il enseigne."""
         course.teacher = self
 

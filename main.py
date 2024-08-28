@@ -1,110 +1,51 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+from DAO.student_dao import StudentManager
+from models.course import Course, find_course_by_id
+from models.student import Student, find_student_by_id
+from src.display import DisplaySchoolCourses, clear_screen, DisplayStudents
 
-"""
-Application de gestion d'une école
-"""
+from rich.console import Console
 
-from datetime import date
-
-from business.school import School
-from models.address import Address
-from models.course import Course
-from models.student import Student
-from models.teacher import Teacher
+from src.factories import create_courses_from_query_results, creat_students_from_query_results
 
 
-def init_school(school: School) -> None:
-    """Initialisation d'un jeu de test pour l'école school."""
-    # création des étudiants et rattachement à leur adresse
-    paul: Student = Student('Paul', 'Dubois', 12)
-    valerie: Student = Student('Valérie', 'Dumont', 13)
-    louis: Student = Student('Louis', 'Berthot', 11)
-
-    paul.address = Address('12 rue des Pinsons', 'Castanet', 31320)
-    valerie.address = Address('43 avenue Jean Zay', 'Toulouse', 31200)
-    louis.address = Address('7 impasse des Coteaux', 'Cornebarrieu', 31150)
-
-    # ajout de ceux-ci à l'école
-    for student in [paul, valerie, louis]:
-        school.add_student(student)
-
-    # création des cours
-    francais: Course = Course("Français", date(2024, 1, 29),
-                              date(2024, 2, 16))
-    histoire: Course = Course("Histoire", date(2024, 2, 5),
-                              date(2024, 2, 16))
-    geographie: Course = Course("Géographie", date(2024, 2, 5),
-                                date(2024, 2, 16))
-    mathematiques: Course = Course("Mathématiques", date(2024, 2, 12),
-                                   date(2024, 3, 8))
-    physique: Course = Course("Physique", date(2024, 2, 19),
-                              date(2024, 3, 8))
-    chimie: Course = Course("Chimie", date(2024, 2, 26),
-                            date(2024, 3, 15))
-    anglais: Course = Course("Anglais", date(2024, 2, 12),
-                             date(2024, 2, 24))
-    sport: Course = Course("Sport", date(2024, 3, 4),
-                           date(2024, 3, 15))
-
-    # ajout de ceux-ci à l'école
-    for course in [francais, histoire, geographie, mathematiques,
-                   physique, chimie, anglais, sport]:
-        school.add_course(course)
-
-    # création des enseignants
-    victor = Teacher('Victor', 'Hugo', 23, date(2023, 9, 4))
-    jules = Teacher('Jules', 'Michelet', 32, date(2023, 9, 4))
-    sophie = Teacher('Sophie', 'Germain', 25, date(2023, 9, 4))
-    marie = Teacher('Marie', 'Curie', 31, date(2023, 9, 4))
-    william = Teacher('William', 'Shakespeare', 34, date(2023, 9, 4))
-    michel = Teacher('Michel', 'Platini', 42, date(2023, 9, 4))
-
-    # ajout de ceux-ci à l'école
-    for teacher in [victor, jules, sophie, marie, william, michel]:
-        school.add_teacher(teacher)
-
-    # association des élèves aux cours qu'ils suivent
-    for course in [geographie, physique, anglais]:
-        paul.add_course(course)
-
-    for course in [francais, histoire, chimie]:
-        valerie.add_course(course)
-
-    for course in [mathematiques, physique, geographie, sport]:
-        louis.add_course(course)
-
-    # association des enseignants aux cours qu'ils enseignent
-    victor.add_course(francais)
-
-    jules.add_course(histoire)
-    jules.add_course(geographie)
-
-    sophie.add_course(mathematiques)
-
-    marie.add_course(physique)
-    marie.add_course(chimie)
-
-    william.add_course(anglais)
-
-    michel.add_course(sport)
 
 
-def main() -> None:
-    """Programme principal."""
-    print("""\
---------------------------
-Bienvenue dans notre école
---------------------------""")
-
-    school: School = School()
-
-    # initialisation d'un ensemble de cours, enseignants et élèves composant l'école
-    init_school(school)
-
-    # affichage de la liste des cours, leur enseignant et leurs élèves
-    school.display_courses_list()
 
 
-if __name__ == '__main__':
+
+
+def main():
+    clear_screen()
+    console = Console()
+
+    create_courses_from_query_results()
+    creat_students_from_query_results()
+
+    sync_student_course_enrollment()
+
+    display_school_courses = DisplaySchoolCourses()
+    display_students = DisplayStudents()
+    t1 = display_school_courses.display()
+    t2 = display_students.display()
+
+    console.print(t1, t2, style="white on blue", justify="center")
+
+
+def sync_student_course_enrollment():
+    """
+     Cette fonction connecte l'objet StudentManager à la base de données et récupère les lignes du tableau
+     « takes ». Pour chaque ligne, elle recherche l'étudiant et le cours correspondant dans leurs listes
+      respectives et ajoute le cours à la liste des cours suivis par l'étudiant.à la liste des cours suivis
+      par l'étudiant.
+    :return:
+    """
+    sm = StudentManager()
+    result = sm.course_taken_by_student()
+    for i in result:
+        student = find_student_by_id(i['student_nbr'])
+        course = find_course_by_id(i['id_course'])
+        student.add_course(course)
+
+
+if __name__ == "__main__":
     main()

@@ -1,12 +1,12 @@
-from DAO.database_manager import DatabaseConnectionManager
+from .database_manager import DatabaseConnectionManager
 from src.table_name import TableName
 
 
 class AddressManager(DatabaseConnectionManager):
-    def query_all(self, table_name: TableName) -> list:
+    def query_all(self) -> list:
         try:
             self.open_connection()
-            query = f"SELECT * FROM {table_name};"
+            query = f"SELECT * FROM {TableName.ADDRESS.value};"
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
             self.close_connection()

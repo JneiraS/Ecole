@@ -5,13 +5,13 @@ from src.table_name import TableName
 
 class TeacherManager(DatabaseConnectionManager):
 
-    def query_all(self, table_name: TableName) -> list:
+    def query_all(self) -> list:
         try:
             self.open_connection()
 
             query = (
                 f"SELECT t.id_teacher,t.start_date, p.first_name, p.last_name, p.age, p.id_address, t.id_person "
-                f"FROM {table_name} t "
+                f"FROM {TableName.TEACHER.value} t "
                 f"INNER JOIN "
                 f"person p ON t.id_person = p.id_person;")
             self.cursor.execute(query)

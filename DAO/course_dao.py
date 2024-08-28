@@ -1,9 +1,25 @@
 from DAO.database_manager import DatabaseConnectionManager
-from models.course import Course
+from src.table_name import TableName
+
+
 
 
 class CourseManager(DatabaseConnectionManager):
-    def create(self, new_course: Course):
+
+    def query_all(self) -> list:
+        try:
+            self.open_connection()
+            query = f"SELECT * FROM {TableName.COURSE.value};"
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            self.close_connection()
+            return rows
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.close_connection()
+            return []
+
+    def create(self, new_course):
         """
         Crée un nouveau cours dans la base de données.
         :param new_course:
@@ -22,7 +38,7 @@ class CourseManager(DatabaseConnectionManager):
             print(f"An error occurred: {e}")
             self.close_connection()
 
-    def read(self, course_to_read: Course):
+    def read(self, course_to_read):
         """
         Renvoit le cours correspondant à l'entité dont l'id est id_course (ou None s'il n'a pu être trouvé)
         :param course_to_read:
@@ -44,7 +60,7 @@ class CourseManager(DatabaseConnectionManager):
 
         return None
 
-    def update(self, course_to_update: Course):
+    def update(self, course_to_update):
         """Mett à jour la base de données avec les nouvelles informations du cours."""
         self.open_connection()
         query = (f" UPDATE course SET name = '{course_to_update.name}', start_date = '"
@@ -54,9 +70,5 @@ class CourseManager(DatabaseConnectionManager):
         self.conn.commit()
         self.close_connection()
 
-    def delete(self): ...
-
-
-
-
-
+    def delete(self):
+        ...

@@ -7,7 +7,6 @@ Classe Course
 # pour simplifier les annotations de types des classes non importées à l'exécution
 # (teacher: Teacher plutôt que teacher: 'Teacher')
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Optional, TYPE_CHECKING
@@ -75,4 +74,8 @@ class Course:
             if self.teacher is not None else "pas d'enseignant affecté"
         return course_str
 
-
+def find_course_by_id(id_number: int) -> Course:
+    """Renvoit l'objet Course correspondant à l'id_number
+    :param id_number:
+    """
+    return next((s for s in Course.course_list if s.id == id_number), None)

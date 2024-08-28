@@ -1,0 +1,2 @@
+def course():
+    return None
