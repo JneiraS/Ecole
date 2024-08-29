@@ -27,4 +27,13 @@ class Adress:
         Adress.aderess_list.append(new_adress)
         return new_adress
 
+    def __str__(self) -> str:
+        return f"{self.street}, {self.city}, {self.postal_code}"
 
+def find_adress_by_id(id_number) -> Adress:
+    """
+    Renvoit l'objet Adress correspondant à l'id_number
+    :param id_number:
+
+    """
+    return next((a for a in Adress.aderess_list if a.id == id_number), None)
