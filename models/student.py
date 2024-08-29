@@ -55,6 +55,12 @@ def find_student_by_id(id_number: int) -> Student:
     return next((s for s in Student.student_list if s.student_nbr == id_number), None)
 
 
+def find_student_by_adress_id(adress_id) -> Student:
+    """
+    Renvoit l'objet Person correspondant à l'id_number
+    :param adress_id:
 
+    """
+    return next((p for p in Student.student_list if p.address == adress_id), None)
 
 
