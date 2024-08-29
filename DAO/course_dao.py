@@ -65,7 +65,10 @@ class CourseManager(DatabaseConnectionManager):
         self.open_connection()
         query = (f" UPDATE course SET name = '{course_to_update.name}', start_date = '"
                  f"{course_to_update.start_date}', end_date = '{course_to_update.end_date}', id_teacher = "
-                 f"{course_to_update.teacher};")
+                 f"{course_to_update.teacher} "
+                 f"WHERE id_course = {course_to_update.id};")
+        print(query)
+
         self.cursor.execute(query)
         self.conn.commit()
         self.close_connection()
