@@ -15,3 +15,15 @@ class AddressManager(DatabaseConnectionManager):
             print(f"An error occurred: {e}")
             self.close_connection()
             return []
+
+    def create(self, class_name):
+        ...
+
+    def read(self, table_name: str):
+        ...
+
+    def update(self, table) -> bool:
+        ...
+
+    def delete(self, course) -> bool:
+        ...

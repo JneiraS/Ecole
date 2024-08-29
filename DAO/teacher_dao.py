@@ -100,7 +100,7 @@ class TeacherManager(DatabaseConnectionManager):
         self.conn.commit()
         self.close_connection()
 
-    def delete(self):
+    def delete(self, ):
         """
         Supprime le professeur de la base de données.
         :return:

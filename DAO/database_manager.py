@@ -63,10 +63,10 @@ class DatabaseConnectionManager(metaclass=SingletonMeta):
         """
         pass
 
-    def update(self, course) -> bool:
+    def update(self, table) -> bool:
         """Met à jour en BD l'entité Course correspondant à course, pour y correspondre
 
-        :param course: cours déjà mis à jour en mémoire
+        :param table:
         :return: True si la mise à jour a pu être réalisée
         """
         pass
