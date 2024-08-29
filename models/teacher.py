@@ -39,3 +39,9 @@ class Teacher(Person):
     def __str__(self) -> str:
         person_str = super().__str__()
         return f"{person_str}, arrivé(e) le {self.hiring_date}"
+
+def find_teacher_by_id(id_number: int) -> Teacher:
+    """Renvoit l'objet Teacher correspondant à l'id_number
+    :param id_number:
+    """
+    return next((s for s in Teacher.teacher_list if s.id == id_number), None)
