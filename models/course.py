@@ -74,6 +74,7 @@ class Course:
             if self.teacher is not None else "pas d'enseignant affecté"
         return course_str
 
+
 def find_course_by_id(id_number: int) -> Course:
     """Renvoit l'objet Course correspondant à l'id_number
     :param id_number:
