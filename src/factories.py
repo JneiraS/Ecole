@@ -29,8 +29,10 @@ class CourseCreator(Creator):
 class PersonCreator(Creator):
     def factory_method(self, information_source: dict):
         person = Person.create_person(information_source['first_name'], information_source['last_name'],
-                                      information_source['age'], information_source['id_address'])
+                                      information_source['age'])
         person.id = information_source['id_person']
+        person.address = information_source['id_address']
+
 
 
 class AdressCreator(Creator):
