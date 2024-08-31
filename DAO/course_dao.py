@@ -1,10 +1,30 @@
 from DAO.database_manager import DatabaseConnectionManager
+from models.course import Course
 from src.table_name import TableName
 
 
 
 
 class CourseManager(DatabaseConnectionManager):
+
+    def get_all_course_ids(self):
+        """
+        Renvoit la liste de tous id enseignants
+        :return:
+        """
+        try:
+            self.open_connection()
+            query = (
+                f"SELECT * FROM `{TableName.COURSE.value}`;"
+            )
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            self.close_connection()
+            return rows
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.close_connection()
+            return []
 
     def query_all(self) -> list:
         try:
@@ -19,7 +39,7 @@ class CourseManager(DatabaseConnectionManager):
             self.close_connection()
             return []
 
-    def create(self, new_course):
+    def create(self, new_course: Course):
         """
         Crée un nouveau cours dans la base de données.
         :param new_course:
