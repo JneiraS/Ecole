@@ -5,6 +5,26 @@ from src.table_name import TableName
 
 class TeacherManager(DatabaseConnectionManager):
 
+    def get_all_teacher_ids(self):
+        """
+        Renvoit la liste de tous id enseignants
+        :return:
+        """
+        try:
+            self.open_connection()
+            query = (
+                f"SELECT * FROM `{TableName.TEACHER.value}`;"
+            )
+            self.cursor.execute(query)
+            rows = self.cursor.fetchall()
+            self.close_connection()
+            return rows
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.close_connection()
+            return []
+
+
     def query_all(self) -> list:
         try:
             self.open_connection()
