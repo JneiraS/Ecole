@@ -49,7 +49,7 @@ class DatabaseConnectionManager(metaclass=SingletonMeta):
     def query_all(self) -> list:
         ...
 
-    def create(self, class_name):
+    def create(self, **class_name):
         """
         Crée une nouvelle entit dans la base de données.
         :param class_name:
