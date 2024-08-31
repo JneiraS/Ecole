@@ -1,9 +1,32 @@
+from DAO import execute_query, find_value
 from DAO.database_manager import DatabaseConnectionManager
 from models.student import Student
 from src.table_name import TableName
 
 
-class StudentManager(DatabaseConnectionManager):
+class StudentDAO(DatabaseConnectionManager):
+
+    def create(self, person_id: int, student_nbr: int):
+        """
+        Crée un nouveau etudiant dans la base de données.
+        :param student_nbr:
+        :param person_id:
+        :return:
+        """
+        try:
+            self.open_connection()
+            query = (f"INSERT INTO {TableName.STUDENT.value} (`student_nbr`, `id_person`) VALUES ({student_nbr}, "
+                     f"{person_id}) ;")
+
+            self.cursor.execute(query)
+            new_student_id = self.cursor.lastrowid
+            self.conn.commit()
+            self.close_connection()
+            return new_student_id
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.close_connection()
+
 
     def get_all_student_ids(self):
         """
@@ -101,3 +124,14 @@ class StudentManager(DatabaseConnectionManager):
             self.close_connection()
             return False
 
+    def assign_student_to_course(self, student_id, course_id):
+
+        query = f"""INSERT INTO `{TableName.TAKES.value}` (`student_nbr`, `id_course`) VALUES ({student_id},
+        {course_id});"""
+
+        return execute_query(self, query)
+
+    def find_id_person_by_student_nbr(self, student_nbr):
+        query = f"SELECT id_person FROM `{TableName.STUDENT.value}` WHERE student_nbr = {student_nbr};"
+
+        return find_value(self, query)
