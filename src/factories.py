@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
-import models
 from DAO.address_dao import AddressDAO
 from DAO.course_dao import CourseDAO
 from DAO.person_dao import PersonDAO
 from DAO.student_dao import StudentDAO
 from DAO.teacher_dao import TeacherDAO
 from models.adress import Adress
+from models.course import Course
 from models.person import Person
 from models.student import Student
 from models.teacher import Teacher
@@ -25,7 +25,7 @@ class Creator(ABC):
 
 class CourseCreator(Creator):
     def factory_method(self, information_source: dict):
-        course = models.course.Course.create_course(information_source['name'], information_source[
+        course = Course.create_course(information_source['name'], information_source[
             'start_date'],
                                                     information_source['end_date'])
         course.id = information_source['id_course']

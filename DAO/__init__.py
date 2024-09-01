@@ -32,6 +32,7 @@ def find_value(self, query: str) -> int | None:
         self.close_connection()
         return None
 
+
 def execute_query_with_condition(self, query: str):
     try:
         self.open_connection()
