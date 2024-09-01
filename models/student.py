@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from typing import ClassVar
 
 from models.person import Person
-
+from src.utils import generate_unique_numeric_id_from_string
 
 
 @dataclass
@@ -18,17 +18,14 @@ class Student(Person):
     - student_nbr   : n° d'élève
     - courses_taken : liste des cours pris par cet élève
     """
-
     student_list = []
-
     students_nb: ClassVar[int] = 0  # nb d'étudiants créés
     student_nbr: int = field(init=False)
     courses_taken: list = field(default_factory=list, init=False)
 
     def __post_init__(self):
         """Détermination du n° de l'élève créé."""
-        Student.students_nb += 1
-        self.student_nbr = Student.students_nb
+        self.student_nbr = generate_unique_numeric_id_from_string(self.first_name + self.last_name)
 
     @classmethod
     def create_student(cls, first_name, last_name, age):
@@ -62,5 +59,4 @@ def find_student_by_adress_id(adress_id) -> Student:
 
     """
     return next((p for p in Student.student_list if p.address == adress_id), None)
-
 

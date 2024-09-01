@@ -40,6 +40,7 @@ class Teacher(Person):
         person_str = super().__str__()
         return f"{person_str}, arrivé(e) le {self.hiring_date}"
 
+
 def find_teacher_by_id(id_number: int) -> Teacher:
     """Renvoit l'objet Teacher correspondant à l'id_number
     :param id_number:

@@ -6,7 +6,7 @@ Classe abstraite Person, mère de Student et Teacher
 
 from dataclasses import dataclass, field
 from abc import ABC
-from models. adress import Adress
+from models.adress import Adress
 
 
 @dataclass
@@ -46,6 +46,7 @@ def find_person_by_adress_id(adress_id) -> Person:
 
     """
     return next((p for p in Person.person_list if p.address == adress_id), None)
+
 
 def find_person_by_id(id_number) -> Person:
     """
