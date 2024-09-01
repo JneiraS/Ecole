@@ -3,7 +3,7 @@ from models.teacher import Teacher
 from src.table_name import TableName
 
 
-class TeacherManager(DatabaseConnectionManager):
+class TeacherDAO(DatabaseConnectionManager):
 
     def get_all_teacher_ids(self):
         """

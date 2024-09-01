@@ -2,7 +2,7 @@ from .database_manager import DatabaseConnectionManager
 from src.table_name import TableName
 
 
-class AddressManager(DatabaseConnectionManager):
+class AddressDAO(DatabaseConnectionManager):
     def query_all(self) -> list:
         try:
             self.open_connection()

@@ -5,7 +5,7 @@ from src.table_name import TableName
 
 
 
-class CourseManager(DatabaseConnectionManager):
+class CourseDAO(DatabaseConnectionManager):
 
     def get_all_course_ids(self):
         """

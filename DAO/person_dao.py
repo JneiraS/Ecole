@@ -3,7 +3,7 @@ from models.person import Person
 from src.table_name import TableName
 
 
-class PersonManager(DatabaseConnectionManager):
+class PersonDAO(DatabaseConnectionManager):
 
     def query_all(self) -> list:
         try:
