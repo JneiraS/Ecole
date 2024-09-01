@@ -19,7 +19,7 @@ class StudentDAO(DatabaseConnectionManager):
 
         return execute_query(self, query)
 
-    def get_all_student_ids(self) -> int | None:
+    def get_all_student_ids(self) -> list:
         """
         Renvoit la liste de tous id etudiants
         :return:

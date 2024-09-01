@@ -1,6 +1,9 @@
 from threading import Lock
 
+
 import pymysql
+
+from src.funcs import read_json
 
 
 class SingletonMeta(type):
@@ -29,13 +32,7 @@ class DatabaseConnectionManager(metaclass=SingletonMeta):
     def open_connection(self):
         """Opens a database connection."""
         # TODO : Extraire dans un json
-        config = {
-            'host': '127.0.0.1',
-            'port': 3306,
-            'user': 'root',
-            'password': '',
-            'database': 'ecole'
-        }
+        config = read_json('./src/conf.json')
         self.conn = pymysql.connect(**config, cursorclass=pymysql.cursors.DictCursor)
         self.cursor = self.conn.cursor()
 
@@ -78,3 +75,6 @@ class DatabaseConnectionManager(metaclass=SingletonMeta):
         :return: True si la suppression a pu être réalisée
         """
         pass
+
+
+
