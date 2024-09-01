@@ -19,8 +19,8 @@ def sync_student_course_enrollment():
     sm = StudentDAO()
     result = sm.course_taken_by_student()
     for i in result:
-        student = find_student_by_id(i['student_nbr'])
-        course = find_course_by_id(i['id_course'])
+        student = find_student_by_id(i["student_nbr"])
+        course = find_course_by_id(i["id_course"])
         try:
             student.add_course(course)
         except:
@@ -35,7 +35,7 @@ def sync_person_addess():
 
     for person in Person.person_list:
         if person.address is not None:
-            person_to_update_address = (find_person_by_adress_id(person.address))
+            person_to_update_address = find_person_by_adress_id(person.address)
 
             address = find_adress_by_id(person_to_update_address.address)
 
@@ -47,10 +47,8 @@ def sync_student_and_person_addess():
     result = sm.get_all_student_ids()
     for i in result:
 
-        person = find_person_by_id(i['id_person'])
-        print((i['student_nbr']))
-        student = find_student_by_id(i['student_nbr'])
-        print(student)
+        person = find_person_by_id(i["id_person"])
+        student = find_student_by_id(i["student_nbr"])
 
         try:
             student.address = person.address
@@ -62,8 +60,8 @@ def sync_teacher_and_person_addess():
     tm = TeacherDAO()
     result = tm.get_all_teacher_ids()
     for i in result:
-        person = find_person_by_id(i['id_person'])
-        teacher = find_teacher_by_id(i['id_teacher'])
+        person = find_person_by_id(i["id_person"])
+        teacher = find_teacher_by_id(i["id_teacher"])
 
         teacher.address = person.address
 
@@ -76,9 +74,7 @@ def add_teacher_to_course() -> None:
     cm = CourseDAO()
     result = cm.get_all_course_ids()
     for i in result:
-        teacher = find_teacher_by_id(i['id_teacher'])
-        course = find_course_by_id(i['id_course'])
+        teacher = find_teacher_by_id(i["id_teacher"])
+        course = find_course_by_id(i["id_course"])
 
         course.teacher = teacher
-
-
