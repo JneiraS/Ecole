@@ -16,7 +16,7 @@ def execute_query(self, query: str) -> int | None:
         return None
 
 
-def find_value(self, query: str) -> int | None:
+def find_value(self, query: str) -> list | None:
     """
     Execute une requête dans la base de données
     """
@@ -33,7 +33,7 @@ def find_value(self, query: str) -> int | None:
         return None
 
 
-def execute_query_with_condition(self, query: str):
+def execute_query_with_confirmation(self, query: str):
     try:
         self.open_connection()
         self.cursor.execute(query)
