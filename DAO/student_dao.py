@@ -1,4 +1,4 @@
-from DAO import execute_query, find_value, execute_query_with_condition
+from DAO import execute_query, find_value, execute_query_with_confirmation
 from DAO.database_manager import DatabaseConnectionManager
 from models.student import Student
 from src.table_name import TableName
@@ -63,12 +63,12 @@ class StudentDAO(DatabaseConnectionManager):
             f"WHERE "
             f"id_person = {student_to_update.id};"
         )
-        return execute_query_with_condition(self, query)
+        return execute_query_with_confirmation(self, query)
 
     def delete(self, student_to_update: Student):
 
         query = f"DELETE FROM {TableName.STUDENT.value} WHERE id_person = {student_to_update.id};"
-        return execute_query_with_condition(self, query)
+        return execute_query_with_confirmation(self, query)
 
     def assign_student_to_course(self, student_id: int, course_id: int):
 
