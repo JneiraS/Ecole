@@ -38,29 +38,3 @@ class School:
         """Ajout de l'élève spécifié à la liste des élèves."""
         self.students.append(student)
 
-    # def display_courses_list(self) -> None:
-    #     """Affichage de la liste des cours avec pour chacun d'eux :
-    #     - leur enseignant
-    #     - la liste des élèves le suivant"""
-    #     for course in self.courses:
-    #         print(f"cours de {course}")
-    #         for student in course.students_taking_it:
-    #             print(f"- {student}")
-    #         print()
-
-    # def display_courses_list(self) -> None:
-    #
-    #     console = Console()
-    #
-    #     table = Table(show_header=True, header_style="bold magenta",title="Cours dispensés par l'Ecole")
-    #     table.add_column("ID", style="dim", width=12)
-    #     table.add_column("Nom", style="dim", width=12)
-    #
-    #     table.add_column("Date de debut", style="dim", width=12)
-    #     table.add_column("Date de fin", style="dim", width=12)
-    #     table.add_column("Enseignant de ce cours", style="dim", width=12)
-    #
-    #     for course in self.courses:
-    #         table.add_row(str(course.id),str(course.name), str(course.start_date), str(course.end_date),
-    #                       course.teacher)
-    #     console.print(table)
