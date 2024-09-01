@@ -7,7 +7,6 @@ from rich import box
 from rich.table import Table
 from rich.console import Console
 
-
 from DAO.course_dao import CourseDAO
 from DAO.person_dao import PersonDAO
 from DAO.student_dao import StudentDAO
@@ -81,7 +80,7 @@ class DisplayTeachers(Display):
     def display(self):
         console = Console()
         terminal_width = console.size.width - 4
-        table = Table(title="\nEnseignants presents dans l'Ecole",title_style="bright_white",
+        table = Table(title="\nEnseignants presents dans l'Ecole", title_style="bright_white",
                       box=box.SQUARE, width=terminal_width, header_style="dodger_blue1",
                       border_style='grey42')
         table.add_column("ID", style="deep_sky_blue1", width=1, justify="right")
@@ -125,18 +124,37 @@ def modify_student():
     Permet de modifier un etudiant
     :return:
     """
-    pm = PersonDAO()
-    sm = StudentDAO()
+    person_manager = PersonDAO()
+    student_manager = StudentDAO()
     response = rich_input('\n\t\tID de l\'Etudiant ? :')
-    id_person = sm.find_id_person_by_student_nbr(int(response))
+    ids_person = student_manager.find_id_person_by_student_nbr(int(response))
     student_to_modifie = find_student_by_id(int(response))
-    person_to_modifie = find_person_by_id(id_person[0]['id_person'])
+    person_to_modifie = find_person_by_id(ids_person[0]['id_person'])
     print(f"\n\t\t\t{person_to_modifie}")
-    person_to_modifie.first_name = rich_input('\n\t\tNouveau Prenoms :')
-    person_to_modifie.last_name = rich_input('\n\t\tNouveau Nom :')
-    person_to_modifie.age = rich_input('\n\t\tNouveau Age :')
-    print(f"\t\t{person_to_modifie}")
-    pm.update(person_to_modifie)
+
+    new_first_name = rich_input('\n\t\tNouveau Prenoms :')
+    if new_first_name == '':
+        pass
+
+    else:
+        person_to_modifie.first_name = new_first_name
+        student_to_modifie.first_name = new_first_name
+
+    new_last_name = rich_input('\n\t\tNouveau Nom :')
+    if new_last_name == '':
+        pass
+    else:
+        person_to_modifie.last_name = new_last_name
+        student_to_modifie.last_name = new_last_name
+
+    new_age = rich_input('\n\t\tNouveau Age :')
+    if new_age == '':
+        pass
+    else:
+        person_to_modifie.age = new_age
+        student_to_modifie.age = new_age
+
+    person_manager.update(person_to_modifie)
 
 
 def modify_cours():
@@ -158,7 +176,3 @@ def modify_cours():
                                   '%Y-%m-%d').date())
     course_to_modify.teacher = int(rich_input('\n\t\tNouvel enseignant :'))
     cm.update(course_to_modify)
-
-
-
-
