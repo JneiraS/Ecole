@@ -25,9 +25,9 @@ def init():
     create_adresses_from_query_results()
     sync_student_course_enrollment()
     sync_person_addess()
-    sync_student_and_person_addess()
     sync_teacher_and_person_addess()
     add_teacher_to_course()
+    sync_student_and_person_addess()
 
 
 def main():
@@ -54,19 +54,6 @@ def main():
             continue
 
 
-
-
-
 if __name__ == "__main__":
     init()
-    #student_creator(" 23 rue de la paix ", "Paris", "31000", "Calorine", "Jones", 11, 1)
-    print(Person.person_list)
-    print(Student.student_list)
-
-
-
-
-
     main()
-
-
