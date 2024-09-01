@@ -5,6 +5,7 @@ from DAO import student_dao
 from DAO.address_dao import AddressDAO
 from DAO.person_dao import PersonDAO
 from models.adress import Adress
+from models.person import Person
 
 
 def generate_unique_numeric_id_from_string(concatenation: str) -> int:
@@ -35,7 +36,7 @@ def student_creator(street, city, postal_code, first_name, last_name, age, cours
         id_adress = address_manager.create(adress)
 
         # Creer une nouvelle personne
-        person = models.person.Person.create_person(first_name, last_name, age)
+        person = Person.create_person(first_name, last_name, age)
         person.address = adress
         person_id = person_manager.create(person, id_adress)
 
@@ -47,3 +48,8 @@ def student_creator(street, city, postal_code, first_name, last_name, age, cours
     except Exception as e:
         print(f"Une erreur s'est produite lors de la création de l'étudiant : {e}")
         raise
+
+
+
+
+
